@@ -1,0 +1,75 @@
+
+# ==========================================
+# LARAVEL PROJECT - GIT IGNORE
+# Smart Child Health and Weight Monitoring System
+# ==========================================
+
+# Environment files and sensitive credentials
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+/storage/logs/*
+
+# Laravel generated files and cache
+/bootstrap/cache/*.php
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+
+# Composer dependencies
+/vendor
+/auth.json
+
+# Node.js dependencies
+/node_modules
+
+# Generated frontend assets
+/public/build
+/public/hot
+
+# Laravel storage link
+/public/storage
+
+# Laravel temporary files
+/storage/pail
+/storage/*.key
+
+# PHPUnit
+/.phpunit.cache
+.phpunit.result.cache
+
+# IDE and editor settings
+/.idea
+/.fleet
+/.nova
+/.vscode
+/.zed
+.phpactor.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Laravel Homestead local configuration
+Homestead.json
+Homestead.yaml
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Other generated files
+npm-debug.log*
+yarn-debug.log*
+# Unnecessary root-level files
+/date_of_birth
+/first()
+/muac)
+/sex
+/routes.json
+/child-weight-monitoring - Shortcut.lnk
