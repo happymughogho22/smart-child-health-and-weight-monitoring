@@ -268,26 +268,17 @@
 
 
             {{-- GROWTH CHARTS --}}
-            <a
-                href="{{ route('growth-monitoring.index') }}"
-                class="app-sidebar-link {{ request()->routeIs('growth-monitoring.*', 'children.growth-charts') ? 'active' : '' }}"
-            >
-                <span class="app-sidebar-icon">↗</span>
-                <span>Growth Charts</span>
-            </a>
+           {{-- GROWTH CHARTS --}}
+<a
+    href="{{ route('growth-charts.index') }}"
+    class="app-sidebar-link {{ request()->routeIs('growth-charts.*', 'children.growth-charts') ? 'active' : '' }}"
+>
+    <span class="app-sidebar-icon">↗</span>
+    <span>Growth Charts</span>
+</a>
 
 
-            {{-- IOT DEVICES --}}
-            <a
-                href="#"
-                class="app-sidebar-link"
-                onclick="return false;"
-                title="IoT device integration"
-            >
-                <span class="app-sidebar-icon">◇</span>
-                <span>IoT Devices</span>
-            </a>
-
+        
 
             {{-- REPORTS --}}
             <a

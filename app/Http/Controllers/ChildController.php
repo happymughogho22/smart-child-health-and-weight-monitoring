@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\GrowthAssessment;
 use App\Models\Child;
 use Illuminate\Http\Request;
 
