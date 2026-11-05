@@ -11,11 +11,30 @@ class ChildController extends Controller
      * Display all children.
      */
     
+
 public function index(Request $request)
 {
     $search = trim($request->input('search', ''));
 
-    $children = \App\Models\Child::query()
+    // 1. Total registered children
+    $totalChildren = Child::count();
+
+    // 2. Children who have at least one health record
+    $monitoredChildren = Child::whereHas('healthRecords')->count();
+
+    // 3. Children whose growth assessments require attention
+    $attentionChildren = Child::whereHas(
+        'healthRecords.growthAssessment',
+        function ($query) {
+            $query->where('requires_attention', true);
+        }
+    )->count();
+
+    // 4. Total recorded growth assessments
+    $totalGrowthAssessments = GrowthAssessment::count();
+
+    // Retrieve children for the existing table
+    $children = Child::query()
         ->when($search !== '', function ($query) use ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('first_name', 'like', "%{$search}%")
@@ -27,7 +46,14 @@ public function index(Request $request)
         ->paginate(10)
         ->withQueryString();
 
-    return view('children.index', compact('children', 'search'));
+    return view('children.index', compact(
+        'children',
+        'search',
+        'totalChildren',
+        'monitoredChildren',
+        'attentionChildren',
+        'totalGrowthAssessments'
+    ));
 }
 
     /**
@@ -62,6 +88,7 @@ public function index(Request $request)
             ->route('children.index')
             ->with('success', 'Child registered successfully.');
     }
+
 
     /**
      * Display a specific child's profile and growth history.

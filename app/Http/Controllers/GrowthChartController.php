@@ -11,27 +11,85 @@ use Illuminate\Support\Collection;
 class GrowthChartController extends Controller
 {
 
-
 public function listChildren(Request $request)
 {
+    // Get the search input.
     $search = trim((string) $request->input('search', ''));
+
+    /*
+    |--------------------------------------------------------------------------
+    | Summary metrics
+    |--------------------------------------------------------------------------
+    */
+
+    // 1. Total children registered in the system.
+    $totalChildren = Child::count();
+
+    // 2. Children who have at least one health record.
+    $monitoredChildren = Child::has('healthRecords')->count();
+
+    // 3. Total growth assessments recorded.
+    $totalGrowthAssessments = \App\Models\GrowthAssessment::count();
+
+    // 4. Children whose latest growth assessment requires attention.
+    $attentionChildren = Child::with([
+        'growthAssessments.healthRecord'
+    ])
+        ->get()
+        ->filter(function ($child) {
+
+            $latestAssessment = $child->growthAssessments
+                ->sortBy(function ($assessment) {
+
+                    return $assessment->healthRecord?->visit_date
+                        ?->timestamp ?? $assessment->id;
+
+                })
+                ->last();
+
+            return $latestAssessment
+                && $latestAssessment->requires_attention === true;
+        })
+        ->count();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Children listing and search
+    |--------------------------------------------------------------------------
+    */
 
     $children = Child::query()
         ->when($search !== '', function ($query) use ($search) {
+
             $query->where(function ($q) use ($search) {
+
                 $q->where('child_id', 'like', "%{$search}%")
                     ->orWhere('first_name', 'like', "%{$search}%")
                     ->orWhere('last_name', 'like', "%{$search}%");
+
             });
+
         })
         ->orderBy('first_name')
         ->orderBy('last_name')
         ->paginate(10)
         ->withQueryString();
 
-    return view('children.growth-charts-index', compact('children', 'search'));
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Return the Growth Charts overview
+    |--------------------------------------------------------------------------
+    */
 
+    return view('children.growth-charts-index', compact(
+        'children',
+        'search',
+        'totalChildren',
+        'monitoredChildren',
+        'attentionChildren',
+        'totalGrowthAssessments'
+    ));
+}
 
     /**
      * Display growth charts for a specific child.

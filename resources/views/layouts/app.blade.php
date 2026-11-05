@@ -546,11 +546,6 @@
                 <span>Growth Charts</span>
             </a>
 
-            <!-- IOT DEVICES -->
-            <a href="#" class="nav-item">
-                <span class="nav-icon">◈</span>
-                <span>IoT Devices</span>
-            </a>
 
             <!-- REPORTS -->
             <a

@@ -1,93 +1,15 @@
 
 @extends('layouts.app')
 
-@section('title', 'Children')
-@section('page-title', 'Children')
-@section('page-subtitle', 'Manage registered children and monitor their growth')
+@section('title', 'Growth Charts')
+@section('page-title', 'Growth Charts')
+@section('page-subtitle', 'Monitor children’s growth measurements and nutritional progress')
 
 @push('styles')
 <style>
 /* =========================================================
-   CHILDREN PAGE
+   GROWTH CHARTS PAGE
 ========================================================= */
-
-.gm-search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 430px;
-    max-width: 100%;
-    flex-shrink: 0;
-}
-
-.gm-search-input-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-}
-
-.gm-search-input-wrap input {
-    display: block;
-    width: 100%;
-    height: 38px;
-    box-sizing: border-box;
-    padding: 0 12px 0 34px;
-    border: 1px solid #d5deea;
-    border-radius: 7px;
-    outline: none;
-    background: #fff;
-    font-family: "Segoe UI", Arial, sans-serif;
-    font-size: 12px;
-}
-
-.gm-search-input-wrap input:focus {
-    border-color: #123b6d;
-    box-shadow: 0 0 0 3px rgba(18, 59, 109, .08);
-}
-
-.gm-search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    pointer-events: none;
-}
-
-.gm-search-btn,
-.gm-clear-btn {
-    min-height: 38px;
-    padding: 0 14px;
-    flex-shrink: 0;
-}
-
-.gm-clear-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff8e6;
-    border: 1px solid #ead7a2;
-    border-radius: 7px;
-    color: #795b12 !important;
-    text-decoration: none !important;
-    font-size: 12px;
-    font-weight: 650;
-}
-
-.gm-clear-btn:hover {
-    background: #f8edca;
-}
-
-@media (max-width: 700px) {
-    .gm-search {
-        width: 100%;
-        flex-wrap: wrap;
-    }
-
-    .gm-search-input-wrap {
-        flex-basis: 100%;
-    }
-}
 
 .gm-page {
     width: 100%;
@@ -96,22 +18,11 @@
     color: #1e293b;
 }
 
-/* Keep this page full-width without a right sidebar */
-body:has(.gm-page) .right-sidebar,
-body:has(.gm-page) .app-right-sidebar,
-body:has(.gm-page) .right-panel,
-body:has(.gm-page) .sidebar-right {
-    display: none !important;
+.gm-page * {
+    box-sizing: border-box;
 }
 
-body:has(.gm-page) .main-content,
-body:has(.gm-page) .content-wrapper,
-body:has(.gm-page) .app-content {
-    max-width: 100%;
-    min-width: 0;
-}
-
-/* PAGE HEADER */
+/* HEADER */
 
 .gm-header {
     display: flex;
@@ -269,7 +180,7 @@ body:has(.gm-page) .app-content {
     font-size: 10px;
 }
 
-/* MAIN CONTENT */
+/* MAIN PANEL */
 
 .gm-main-grid {
     display: block;
@@ -329,7 +240,7 @@ body:has(.gm-page) .app-content {
     margin: 4px 0 0;
 }
 
-/* SEARCH FORM */
+/* SEARCH */
 
 .gm-search {
     display: flex;
@@ -350,7 +261,6 @@ body:has(.gm-page) .app-content {
     display: block;
     width: 100%;
     height: 38px;
-    box-sizing: border-box;
     border: 1px solid #d5deea;
     border-radius: 7px;
     padding: 0 12px 0 34px;
@@ -389,15 +299,21 @@ body:has(.gm-page) .app-content {
 }
 
 .gm-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: #fff8e6;
     border: 1px solid #ead7a2;
+    border-radius: 7px;
     color: #795b12 !important;
+    text-decoration: none !important;
+    font-size: 12px;
+    font-weight: 650;
 }
 
 .gm-clear-btn:hover {
     background: #f8edca;
     border-color: #d4a72c;
-    color: #123b6d !important;
 }
 
 /* TABLE */
@@ -525,7 +441,7 @@ body:has(.gm-page) .app-content {
     background: #94a3b8;
 }
 
-/* PROFILE BUTTON */
+/* VIEW CHARTS BUTTON */
 
 .gm-row-actions {
     display: flex;
@@ -657,10 +573,10 @@ body:has(.gm-page) .app-content {
     {{-- PAGE HEADER --}}
     <div class="gm-header">
         <div class="gm-header-left">
-            <h1>Growth Monitoring</h1>
+            <h1>Growth Charts & Monitoring</h1>
             <p>
-                Monitor children's growth measurements and identify
-                potential nutritional concerns.
+                Monitor children's growth measurements, review growth charts
+                and identify potential nutritional concerns.
             </p>
         </div>
 
@@ -732,52 +648,52 @@ body:has(.gm-page) .app-content {
 
     </div>
 
-    {{-- CHILDREN TABLE --}}
+    {{-- CHILDREN GROWTH CHARTS TABLE --}}
     <div class="gm-main-grid">
         <section class="gm-panel">
 
             <div class="gm-panel-header">
+
                 <div class="gm-panel-title">
-                    <div class="gm-panel-title-icon">👥</div>
+                    <div class="gm-panel-title-icon">📈</div>
                     <div>
-                        <h3>Children Growth Monitoring</h3>
-                        <p>Select a child to view their profile or growth charts.</p>
+                        <h3>Children Growth Overview</h3>
+                        <p>Select a child to view their individual growth charts.</p>
                     </div>
                 </div>
 
-                {{-- SEARCH WITH SEARCH AND CLEAR BUTTONS --}}
-                
-<form
-    method="GET"
-    action="{{ route('children.index') }}"
-    class="gm-search"
-    role="search"
->
-    <div class="gm-search-input-wrap">
-        <span class="gm-search-icon" aria-hidden="true">⌕</span>
+                {{-- SEARCH --}}
+                <form
+                    method="GET"
+                    action="{{ route('growth-charts.index') }}"
+                    class="gm-search"
+                    role="search"
+                >
+                    <div class="gm-search-input-wrap">
+                        <span class="gm-search-icon" aria-hidden="true">⌕</span>
 
-        <input
-            type="search"
-            name="search"
-            value="{{ request('search', '') }}"
-            placeholder="Search by child name or ID..."
-            aria-label="Search by child name or ID"
-        >
-    </div>
+                        <input
+                            type="search"
+                            name="search"
+                            value="{{ $search ?? request('search', '') }}"
+                            placeholder="Search by child name or ID..."
+                            aria-label="Search by child name or ID"
+                        >
+                    </div>
 
-    <button type="submit" class="gm-btn gm-btn-primary gm-search-btn">
-        Search
-    </button>
+                    <button type="submit" class="gm-btn gm-btn-primary gm-search-btn">
+                        Search
+                    </button>
 
-    @if(request()->filled('search'))
-        <a
-            href="{{ route('children.index') }}"
-            class="gm-btn gm-clear-btn"
-        >
-            Clear
-        </a>
-    @endif
-</form>
+                    @if(request()->filled('search'))
+                        <a
+                            href="{{ route('growth-charts.index') }}"
+                            class="gm-btn gm-clear-btn"
+                        >
+                            Clear
+                        </a>
+                    @endif
+                </form>
 
             </div>
 
@@ -800,6 +716,7 @@ body:has(.gm-page) .app-content {
 
                         <tbody>
                         @foreach($children as $child)
+
                             @php
                                 $latestRecord = $child->healthRecords
                                     ->sortByDesc(function ($record) {
@@ -887,6 +804,7 @@ body:has(.gm-page) .app-content {
                                             <div class="gm-child-name">
                                                 {{ $childName ?: 'Unnamed Child' }}
                                             </div>
+
                                             <div class="gm-child-id">
                                                 {{ $child->child_id ?? 'No ID' }}
                                             </div>
@@ -906,7 +824,9 @@ body:has(.gm-page) .app-content {
 
                                 <td>
                                     @if($latestRecord && $latestRecord->weight !== null)
-                                        <strong>{{ number_format((float) $latestRecord->weight, 1) }}</strong>
+                                        <strong>
+                                            {{ number_format((float) $latestRecord->weight, 1) }}
+                                        </strong>
                                         <span style="color:#94a3b8;">kg</span>
                                     @else
                                         —
@@ -915,7 +835,9 @@ body:has(.gm-page) .app-content {
 
                                 <td>
                                     @if($latestRecord && $latestRecord->height !== null)
-                                        <strong>{{ number_format((float) $latestRecord->height, 1) }}</strong>
+                                        <strong>
+                                            {{ number_format((float) $latestRecord->height, 1) }}
+                                        </strong>
                                         <span style="color:#94a3b8;">cm</span>
                                     @else
                                         —
@@ -940,14 +862,15 @@ body:has(.gm-page) .app-content {
                                 <td>
                                     <div class="gm-row-actions">
                                         <a
-                                            href="{{ route('children.show', $child) }}"
+                                            href="{{ route('children.growth-charts', $child) }}"
                                             class="gm-view-btn"
                                         >
-                                            View Profile →
+                                            View Charts →
                                         </a>
                                     </div>
                                 </td>
                             </tr>
+
                         @endforeach
                         </tbody>
                     </table>
@@ -964,10 +887,12 @@ body:has(.gm-page) .app-content {
 
                 {{-- EMPTY STATE --}}
                 <div class="gm-empty">
-                    <div class="gm-empty-icon">👶</div>
+                    <div class="gm-empty-icon">📈</div>
+
                     <h4>No children found</h4>
 
                     @if(trim((string) ($search ?? request('search', ''))) !== '')
+
                         <p>
                             No registered children match
                             "{{ $search ?? request('search', '') }}".
@@ -975,12 +900,14 @@ body:has(.gm-page) .app-content {
                         </p>
 
                         <a
-                            href="{{ route('growth-monitoring.index') }}"
+                            href="{{ route('growth-charts.index') }}"
                             class="gm-btn gm-btn-light"
                         >
                             Clear Search
                         </a>
+
                     @else
+
                         <p>
                             No children have been registered yet.
                             Register a child to begin monitoring growth.
@@ -992,6 +919,7 @@ body:has(.gm-page) .app-content {
                         >
                             + Register Child
                         </a>
+
                     @endif
                 </div>
 
